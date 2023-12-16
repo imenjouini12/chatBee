@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StaticController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,8 @@ use App\Http\Controllers\StaticController;
 |
 */
 
-Route::get('/',[StaticController::class,'index']);
 
-Route::get('/about',[StaticController::class,'about']);
-Route::get('/portfolio',[StaticController::class,'portfolio']);
 
-Route::get('/contact',[StaticController::class,'contact']);
+Route::get('/', function () {
+    return view('welcome');
+});
