@@ -4,22 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
-  /*  public function login(Request $request)
+
+    public function index()
     {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $token = $user->createToken('authToken')->plainTextToken;
-
-            return response()->json(['token' => $token]);
-        }
-
-        return response()->json(['message' => 'Invalid credentials'], 401);
-    }*/
+        $users = User::all();
+        return response()->json(['users'=> $users],200);
+    }
+     //This function is reserved for admin
     public function createUser(Request $request){
         $user = new User();
         $user->name = $request->input('name');
