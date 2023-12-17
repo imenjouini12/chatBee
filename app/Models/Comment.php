@@ -43,4 +43,8 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
 
     }
+    public function getCommentForPost($id){
+        return $users = Comment::where('post_id', $id)->get();
+    }
+
 }

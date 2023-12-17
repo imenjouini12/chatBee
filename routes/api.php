@@ -18,36 +18,39 @@ use App\Http\Controllers\AuthController;
 */
 
 
+
+//public routes for User  
+Route::post('/login',[AuthController::class,'login']);
 Route::get('/users',[UserController::class,'index']);  
 Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
+
+
 //public routes for Posts  
 Route::get('/posts',[PostController::class,'getPosts']);
-Route::get('/posts/{id}',[PostController::class,'getPost']);
+Route::get('/post/{id}',[PostController::class,'getPost']);
 Route::get('/posts/{id}/comments',[PostController::class,'getCommentsForPost']);  // afficher les commentaires d'une puplucations 
+
 //public routes for Comments
 Route::get('/comments',[PostController::class,'getComments']);
-Route::get('/comments/{id}',[PostController::class,'getComment']);
-    
-Route::get('/test', function () {
-    return response()->json(['message' => 'Route de test']);
-});
+Route::get('/comments/{id}',[PostController::class,'getComment']); 
+
+
+
+
+//Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-
     Route::post('/logout',[AuthController::class,'logout']);
-  
-
     //Protected routes for User 
     // Route::post('/createuser',[UserController::class,'createUser']);
     Route::get('/users/{id}',[UserController::class,'getUser']);  
     //Protected routes for Posts 
     Route::post('/createpost',[PostController::class,'createPost']);
-    Route::put('/updateposts/{id}',[PostController::class,'updatePosts']);  
-    Route::delete('/deleteposts/{id}',[PostController::class,'deletePosts']);
+    Route::put('/updatepost/{id}',[PostController::class,'updatePost']);  
+    Route::delete('/deletepost/{id}',[PostController::class,'deletePost']);
     //Protected routes for Comments
     Route::post('/createcomment',[CommentController::class,'createComment']);
     Route::put('/updatecomment',[CommentController::class,'updateComment']);
-    Route::delete('/deletecomment',[CommentController::class,'deleteComment']);
-       
+    Route::delete('/deletecomment',[CommentController::class,'deleteComment']);  
+      
 });

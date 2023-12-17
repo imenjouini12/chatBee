@@ -12,13 +12,77 @@ class PostController extends Controller
         return response()->json(['posts'=>$posts],200);
 
     }
-    public function getPosts(){
+    public function getPost($id){
+        $post = Post::find($id);
+        return response()->json(['post'=>$post],200);
 
     }
-    public function getPosts(){
+    public function createPost(Request $request){
+      
+
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string'
+        ]);
+        // Récupérez l'utilisateur authentifié
+          $user = $request->user();
+        // Créez le post en associant l'utilisateur
+    $post = $user->posts()->create([
+        'title' => $request->input('title'),
+        'content' => $request->input('content'),
+    ]);
+    return response()->json(['message' => 'Post créé avec succès', 'post' => $post], 201);
 
     }
-    public function getPosts(){
+    public function updatePost(Request $request,$id){
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+        ]);
+       // Récupérez l'utilisateur authentifié
+       $user = $request->user();
+
+       // Récupérez le post à mettre à jour
+       $post = Post::find($id);
+
+       //Vérifier si l'utlisateur connecté est le propriétaire de la post 
+       if($user->id !== $post->user_id ){
+        return response()->json([
+          'message'=>"Vous n'etes pas autorisé à modifier cette ressource "
+        ],403);
+       }
+       //Modifié la puplication
+       $post->update([
+        'title' => $request->input('title'),
+        'content'=>$request->input('content')
+       ]);
+       return response()->json([
+        "message"=>"post modifié avec succeès",
+        'post'=> $post
+       ],200);
+
+      
+
+    }
+    public function deletePost($id){
+     
+        Post::destroy($id);
+        return response()->json([
+            "message"=>"publication supprimer avec succès"
+        ]);
+
+    }
+    public function getCommentsForPost($id){
+
+      
+        $comments = Comments::getCommentForPost($id);
+
+        return response()->json([
+            "message"=> "les messges de cette post ",
+            "comments" =>  $comments 
+
+        ]);
+
 
     }
 }
