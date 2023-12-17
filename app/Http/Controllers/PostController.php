@@ -72,16 +72,16 @@ class PostController extends Controller
         ]);
 
     }
-    public function getCommentsForPost($id){
+    public function getCommentsForPost($post_id){
 
-      
-        $comments = Comments::getCommentForPost($id);
+     //recupérer la post avec ses commentaires  
+     $post = Post::with('comments')->findOrFail($post_id);
 
-        return response()->json([
-            "message"=> "les messges de cette post ",
-            "comments" =>  $comments 
+     //retournner les commentaires de ce post 
 
-        ]);
+    return response()->json([
+       "comments"=> $post->comments
+    ],200);
 
 
     }
