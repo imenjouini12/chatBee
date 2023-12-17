@@ -31,8 +31,8 @@ Route::get('/post/{id}',[PostController::class,'getPost']);
 Route::get('/posts/{id}/comments',[PostController::class,'getCommentsForPost']);  // afficher les commentaires d'une puplucations 
 
 //public routes for Comments
-Route::get('/comments',[PostController::class,'getComments']);
-Route::get('/comments/{id}',[PostController::class,'getComment']); 
+Route::get('/comments',[CommentController::class,'getComments']);
+Route::get('/comments/{id}',[CommentController::class,'getComment']); 
 
 
 
@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/deletepost/{id}',[PostController::class,'deletePost']);
     //Protected routes for Comments
     Route::post('/createcomment',[CommentController::class,'createComment']);
-    Route::put('/updatecomment',[CommentController::class,'updateComment']);
-    Route::delete('/deletecomment',[CommentController::class,'deleteComment']);  
-      
+    Route::put('/updatecomment/{id}',[CommentController::class,'updateComment']);
+    Route::delete('/deletecomment/{id}',[CommentController::class,'deleteComment']);  
+
 });

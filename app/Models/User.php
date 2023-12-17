@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -46,4 +47,14 @@ class User extends Authenticatable
 {
     return $this->hasMany(Post::class);
 }
+/*
+* Relation avec les commentaires
+*
+* @return \Illuminate\Database\Eloquent\Relations\HasMany
+*/
+public function comments():HasMany{
+
+   return $this->hasMany(Comment::class);
+}
+
 }

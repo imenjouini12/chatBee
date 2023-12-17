@@ -19,7 +19,7 @@ class PostController extends Controller
     }
     public function createPost(Request $request){
       
-
+        
         $request->validate([
             'title' => 'required|string',
             'content' => 'required|string'
@@ -31,7 +31,7 @@ class PostController extends Controller
         'title' => $request->input('title'),
         'content' => $request->input('content'),
     ]);
-    return response()->json(['message' => 'Post créé avec succès', 'post' => $post], 201);
+    return response()->json(['message' => 'Post créé avec succès', 'post' => $post], 200);
 
     }
     public function updatePost(Request $request,$id){

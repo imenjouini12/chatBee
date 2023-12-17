@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+/*
 /**
  * Class Comment
  * 
@@ -23,14 +23,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Comment extends Model
 {
     use HasFactory;
-    protected $fillable = ['content'];
+    protected $fillable = ['user_id', 'post_id', 'content'];
     /**
      * Relation avec l'utilisateur (Auteur)
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user():BelongsTo{
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
 
     }
     
@@ -40,7 +40,7 @@ class Comment extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function post():BelongsTo{
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Post::class,'post_id');
 
     }
 
