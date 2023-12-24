@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewCommentNotification;
 
 class CommentController extends Controller
 {
@@ -44,34 +45,18 @@ class CommentController extends Controller
         'user_id' => $userId
     ]);
 
+        // la post associé à ce commentaire
+        $post = $comment->post;
+
+        // notifier le propriétaire du post
+        $postOwner = $post->user;
+        $postOwner->notify(new NewCommentNotification($comment, $post));
+    
+
     return response()->json(['message' => 'Commentaire créé avec succès']);
 }
 
-/*
-    //Ajouter un commentaire sur une post
-    public function createComment(Request $request)
-    {
-        try {
-            
-            $validatedData = $request->validate([
-                'content' => "required|string",
-                'post_id' => "required|exists:posts,id",
-            ]);
-                  // Récupérez l'utilisateur authentifié
-             $user = $request->user();
-            // Créer le commentaire avec l'ID de l'utilisateur extrait automatiquement
-            $comment = $user->comments()->create([
-                'content' => $request->input('content'),
-                'post_id' => $request->input('post_id'),
-            ]);
-    
-            return response()->json(['message' => 'Commentaire créé avec succès']);
-        } catch (QueryException $e) {
-            return response()->json(['error' => 'Erreur de base de données', 'message' => $e->getMessage()], 500);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Une erreur inattendue est survenue', 'message' => $e->getMessage()], 500);
-        }
-    }*/
+
     //Modifier un commentaire
     public function updateComment(Request $request, $id){
 

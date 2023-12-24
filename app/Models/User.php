@@ -57,4 +57,11 @@ public function comments():HasMany{
    return $this->hasMany(Comment::class);
 }
 
+
+public function routeNotificationForMail($notification)
+{
+    return $this->email;
+}
+
+
 }

@@ -43,5 +43,14 @@ class Comment extends Model
         return $this->belongsTo(Post::class,'post_id');
 
     }
+    //lier le modele commentaire avec l'event lister
+    protected static function boot()
+{
+    parent::boot();
+
+    static::created(function ($comment) {
+        event(new \App\Events\NewComment($comment));
+    });
+}
 
 }

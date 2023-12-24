@@ -31,7 +31,7 @@ class Post extends Model
      * @var array
      */
 
-    protected $fillable = ['title','content'];
+    protected $fillable = ['title','content','user_id'];
 
     /**
      * Relation avec l'utilisateur (Auteur)
@@ -40,7 +40,7 @@ class Post extends Model
      */
     public function User():BelongsTo{
 
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
